@@ -14,7 +14,8 @@ export class BookService {
     async getBook(id: string, params: Params) {
         return this.prisma.book.findUnique({
             where: {
-                id: parseInt(id) //?
+                // @ts-ignore
+                id: id 
             }
         })
     }
@@ -22,7 +23,8 @@ export class BookService {
     async deleteBook(id: string) {
         return this.prisma.book.delete({
             where: {
-                id: parseInt(id) //?
+                // @ts-ignore
+                id: id
             }
         })
     }
