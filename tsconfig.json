@@ -3,7 +3,9 @@
     "module": "commonjs",
     "declaration": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./*"
+      ]
     },
     "removeComments": true,
     "emitDecoratorMetadata": true,
