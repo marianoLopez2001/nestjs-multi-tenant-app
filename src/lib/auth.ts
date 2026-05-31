@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import prisma from "./prisma";
+import prisma from "../../prisma/prisma";
 import { config } from 'dotenv';
 
 config();

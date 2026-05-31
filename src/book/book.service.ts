@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
-import { Book } from "../generated/prisma";
-import { BookCreateInput } from "@/generated/prisma/models";
+import { BookCreateInput } from "@/prisma/generated/models";
 
 @Injectable()
 export class BookService {
@@ -14,7 +13,6 @@ export class BookService {
     async getBook(id: string, params: Params) {
         return this.prisma.book.findUnique({
             where: {
-                // @ts-ignore
                 id: id 
             }
         })
@@ -23,7 +21,6 @@ export class BookService {
     async deleteBook(id: string) {
         return this.prisma.book.delete({
             where: {
-                // @ts-ignore
                 id: id
             }
         })
