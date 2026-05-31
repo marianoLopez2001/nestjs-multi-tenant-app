@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param,  Post, Query } from "@nestjs/common";
 import { BookService } from "./book.service";
 import { AllowAnonymous } from "@thallesp/nestjs-better-auth";
-import { BookCreateInput } from "@/prisma/generated/models";
+import { BookCreateInput } from "../../prisma/generated/models";
 
 @Controller('book')
 export class BookController {

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
-import { BookCreateInput } from "@/prisma/generated/models";
+import { BookCreateInput } from "../../prisma/generated/models";
 
 @Injectable()
 export class BookService {
