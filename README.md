@@ -1,1 +1,7 @@
-https://www.prisma.io/docs/guides/frameworks/nestjs
+- envolver el auth en un service para cargar las env vars y no exponer las variables
+- 
+-
+-
+-
+-
+-

@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client"
+  // provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -7,10 +8,95 @@ datasource db {
   provider = "postgresql"
 }
 
+model Library {
+  id        String   @id @default(uuid())
+  name      String
+  owner     User     @relation("OwnerRelation", fields: [ownerId], references: [id])
+  ownerId   String   @unique
+  clients   User[]   @relation("ClientsRelation")
+  createdAt DateTime @default(now())
+  books     Book[]
+}
+
 model Book {
-  id          Int    @id @default(autoincrement())
+  id          String    @id @default(uuid())
   name        String
   description String
   author      String
   cover       String
+  quantity    Int
+  library     Library[]
+  // should not be visible to client
+}
+
+enum Role {
+  CLIENT
+  OWNER
+  EMPLOYEE
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  library       Library?  @relation("ClientsRelation", fields: [libraryId], references: [id])
+  libraryId     String?
+  ownedLibrary  Library?  @relation("OwnerRelation")
+  role          Role      @default(CLIENT)
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("verification")
 }

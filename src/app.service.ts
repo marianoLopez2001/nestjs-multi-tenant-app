@@ -7,7 +7,6 @@ export class AppService {
   constructor(private prisma: PrismaService) { }
 
   async getHello(): Promise<any> {
-    const x = this.prisma.book.findMany();
-    return x;
+    return 'Home';
   }
 }
